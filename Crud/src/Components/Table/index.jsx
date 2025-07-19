@@ -2,7 +2,8 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ApiCLient from '../ApiClient/ApiClient'
-
+import Table from "../Global/Table"
+import { FiMoreVertical } from "react-icons/fi";
 const index = () => {
     const [data,setData] = useState([])
     const navigate = useNavigate()
@@ -32,80 +33,94 @@ const index = () => {
         getData(value); // call API with search key
       };
 
-  return (
-   
-        <div class="bg-white p-8 overflow-auto min-w-screen  mt-20">
-             <div className="flex   justify-end">   {/* Add pt-16 (or adjust as per header height) */}
-      <button onClick={()=>navigate("/add-product")}   className="bg-blue-400 mt-4 p-2 rounded justify-end  hover:bg-blue-700  hover:border-black">+ Add Data</button>
-      
-    </div>
-    <div className="">
-            <input type='search'
-            placeholder='Search'
-            className='text-black p-2 border-2 rounded-lg border-[#ABABAB]'
-            onChange= {handlesearch}
-            >
-            </input>
-          </div>
-   
-  <h2 class="text-2xl mb-4">Classes List</h2>
-  {console.log(localStorage.getItem('token  '))}
-  {/* <!-- Classes Table --> */}
-  <div class="relative overflow-auto">
-    <div class="overflow-x-auto rounded-lg">
-      {
-        
-        <table class="min-w-full bg-white border mb-20">
-        <thead>
-          <tr class="bg-[#2B4DC994] text-center text-xs md:text-sm font-thin text-white">
-            <th class="p-0">
-              <span class="block py-2 px-3 border-r border-gray-300">Id</span>
-            </th>
-            <th class="p-0">
-              <span class="block py-2 px-3 border-r border-gray-300">Name</span>
-            </th>
-            <th class="p-0">
-              <span class="block py-2 px-3 border-r border-gray-300">category</span>
-            </th>
-            <th class="p-0">
-              <span class="block py-2 px-3 border-r border-gray-300">Price</span>
-            </th>
-            
-            <th class="p-4 text-xs md:text-sm">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-            {console.log(data.data)}
-            { data.length > 0 && 
-                data.map((item,index)=>{
-                    return (
-                        <tr class="border-b text-xs md:text-sm text-center text-gray-800">
-                            <td class="p-2 md:p-4">{index +1}</td>
-                            <td class="p-2 md:p-4">{item.name}</td>
-                            <td class="p-2 md:p-4">{item.category}</td> 
-                            <td class="p-2 md:p-4">{item.price}</td>
-                            
-                            <td class="relative p-2 md:p-4 flex justify-center space-x-2">
-                            <button onClick={()=>navigate(`detail/${item._id}`)}     class="bg-amber-600 text-white px-3 py-1 rounded-md text-xs md:text-sm">View</button>    
-                            <button onClick={()=>navigate(`edit/${item._id}`)} class="bg-blue-500 text-white px-3 py-1 rounded-md text-xs md:text-sm">Edit</button>
-                            <button onClick={()=>deleteIetm(item._id)}   class="bg-red-500 text-white px-3 py-1 rounded-md text-xs md:text-sm">Delete</button>
-                            </td>
-                        </tr>
 
-                    )
-                })
-            }
-          
-          
-         
-        </tbody>
-      </table>
-      }
+  
+
+const columns = [
+  { header: "Sr no.", accessor: "id", sort: true },
+  { header: "Candidates Name", accessor: "name", sort: false },
+  { header: "Email Address", accessor: "email", sort: false },
+  { header: "Phone Number", accessor: "number", sort: false },
+  { header: "Position", accessor: "position", sort: false },
+  {
+    header: "Status",
+    accessor: "status",
+    sort: false,
+    render: (value) => {
+      const statusColor = {
+        New: "bg-gray-200 text-gray-800",
+        Selected: "bg-green-100 text-green-800",
+        Rejected: "bg-red-100 text-red-800",
+      };
+      return (
+        <select
+
+          className={`text-xs font-medium px-2 py-1 rounded-full ${statusColor[value] || "bg-gray-100"}`}
+        >
+          <option value="">{value}</option>
+              <option value="Selected" className="">Selected</option>
+              <option value="Rejected" className="">Rejected</option>
+        </select>
+      );
+    },
+  },
+  { header: "Experience", accessor: "experience", sort: false },
+  {
+    header: "Action",
+    accessor: "action",
+    sort: false,
+    render: () => (
+      <button className="p-2 rounded hover:bg-gray-100">
+        <FiMoreVertical className="text-gray-600" />
+      </button>
+    ),
+  },
+];
+
+  return (
+  <div className="h-full flex flex-col bg-gray-50">
+    {/* Main Content Wrapper */}
+    <div className="flex-1 bg-white px-5 py-8 overflow-auto">
+      
+      {/* Top Filters/Search */}
+      <div className="flex justify-between items-center gap-4 mb-6">
+        <div className="flex gap-4">
+          <select className="px-4 py-2 pr-12 pl-4 rounded-3xl text-sm border border-gray-300 shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none">
+            <option value="">Status</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+          <select className="px-4 py-2 rounded-md text-sm border border-gray-300 shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none">
+            <option value="">Select status</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+
+        <div className="flex gap-4">
+          <input
+            type="search"
+            placeholder="Search"
+            className="text-black p-2 px-4 border rounded-3xl border-[#ABABAB]"
+            onChange={handlesearch}
+          />
+          <button
+            onClick={() => navigate("/add-product")}
+            className="bg-custom-purple text-white px-10 h-[39px] rounded-3xl hover:border-black"
+          >
+            Add Candidate
+          </button>
+        </div>
+      </div>
+
+      {/* Table Section */}
+      <div className="flex-1 ">
+        <Table columns={columns} data={data} />
+      </div>
     </div>
   </div>
-</div>
-    
-  )
+);
+
 }
 
 export default index

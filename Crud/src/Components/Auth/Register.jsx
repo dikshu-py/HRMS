@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import ApiClient from '../ApiClient/ApiClient';
 
 const Register = () => {
     const [data,setData] = useState({
@@ -9,6 +10,7 @@ const Register = () => {
     
     
         const handlesubmit = async (e) =>{
+           
             e.preventDefault(); // ✅ prevent page reload
             console.log(data)
             const res = await ApiClient.post('http://localhost:3000/register', data).then(

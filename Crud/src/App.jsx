@@ -17,7 +17,7 @@ function App() {
   return (
 
     <BrowserRouter>
-      <Header /> {/* common header on all pages */}
+     
       <Routes>
         
       <Route path="/login" element={<Login />} />
