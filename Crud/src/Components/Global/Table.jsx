@@ -58,7 +58,11 @@ const Table = ({ columns, data }) => {
         <tbody className="bg-white divide-y divide-gray-200">
           {sortedData.map((row, idx) => (
             <tr key={idx} className="hover:bg-gray-50">
-                <td className="px-5 py-3 whitespace-nowrap">{idx + 1}</td> 
+                {
+                    columns[0].accessor == "id" &&
+                    <td className="px-5 py-3 whitespace-nowrap">{idx + 1}</td> 
+                }
+                
                 
               {columns.filter(col => col.accessor != "id" ).map((col) => (
                 <td key={col.accessor} className="px-5 py-3 whitespace-nowrap">

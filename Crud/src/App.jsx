@@ -10,6 +10,9 @@ import View from "./Components/FormData/view"
 import Login from "./Components/Auth/Login"
 import Register from  "./Components/Auth/Register"
 import PrivateRoutes from './Components/PRotectedRoute'
+import Leaves from "./Components/SidebarComponent/Leaves"
+import Attendence from  "./Components/SidebarComponent/Attendence"
+import Employee from  "./Components/SidebarComponent/Employees"
 
 function App() {
   const [count, setCount] = useState(0)
@@ -31,6 +34,9 @@ function App() {
           <Route path="/add-product" element={<Formdata />} />
           <Route path="/detail/:id" element={<View />} />
           <Route path="/edit/:id" element={<Formdata />} />
+          <Route path="/leaves" element={<Leaves />} />
+          <Route path="/attendence" element={<Attendence />} />
+          <Route path="/employees" element={<Employee />} />
         
       </Route>
       </Routes> </BrowserRouter>

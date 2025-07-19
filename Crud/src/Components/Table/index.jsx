@@ -4,16 +4,25 @@ import { useNavigate } from 'react-router-dom'
 import ApiCLient from '../ApiClient/ApiClient'
 import Table from "../Global/Table"
 import { FiMoreVertical } from "react-icons/fi";
+import ApiClient from '../ApiClient/ApiClient'
 const index = () => {
     const [data,setData] = useState([])
     const navigate = useNavigate()
     useEffect(()=>{
         getData();
     },[])
+    //to filter Elements based on Codnition
+    const [filters, setFilters] = useState({
+  searchKey: '',
+  status: '',
+  
+}); 
 
-    const getData = async (searchKey = "") => {
+
+    const getData = async (filters = {}) => {
         try {
-          const res = await ApiCLient.get(`http://localhost:3000/products?search=${searchKey}`);
+           const query = new URLSearchParams(filters).toString();
+           const res = await ApiCLient.get(`http://localhost:3000/products?${query}`);
           setData(res.data.data);
         } catch (err) {
           console.log(err);
@@ -28,13 +37,42 @@ const index = () => {
         getData();
     } 
 
-    const handlesearch = (e) => {
-        const value = e.target.value;
-        getData(value); // call API with search key
+    const handlefilter = (key,e) => {
+        const payload  = {...filters , [key]:  e.target.value}
+        setFilters(payload)
+        getData(payload); 
       };
 
 
-  
+  const handleStatusChange = async (row,value)=>{
+      try{
+        if(value == "Selected"){
+           const payload = {
+          name : row.name || '',
+          email : row.email,
+          number : row.number || '',
+          department :row.position || '',
+          position : "Intern",
+          experience : row.experience || '',
+          joining : new Date(),
+          image : row.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7AO5QoFLh_DRpDwdWFDkhdMnvNI6xsw3dbw&s'
+          }
+          await ApiCLient.post('http://localhost:3000/emplyee/add',payload).then((res)=>console.log(res)).catch((err)=> console.log(err))
+
+        }else{
+          await ApiClient.delete(`http://localhost:3000/employee/${row.email}`).then((res)=> alert("Removed From Employees")).catch((err)=>console.log(err))
+        }
+        console.log(row)
+        await ApiClient.put(`http://localhost:3000/edit/${row._id}`,{status : value})
+        
+        getData();
+       
+
+      }catch(err){
+        console.log(err)
+      }
+    
+  }
 
 const columns = [
   { header: "Sr no.", accessor: "id", sort: true },
@@ -46,7 +84,7 @@ const columns = [
     header: "Status",
     accessor: "status",
     sort: false,
-    render: (value) => {
+    render: (value,row) => {
       const statusColor = {
         New: "bg-gray-200 text-gray-800",
         Selected: "bg-green-100 text-green-800",
@@ -54,10 +92,11 @@ const columns = [
       };
       return (
         <select
-
+          onChange={(e) => handleStatusChange(row, e.target.value)}
           className={`text-xs font-medium px-2 py-1 rounded-full ${statusColor[value] || "bg-gray-100"}`}
         >
           <option value="">{value}</option>
+           <option value="New" className="">New</option>
               <option value="Selected" className="">Selected</option>
               <option value="Rejected" className="">Rejected</option>
         </select>
@@ -86,14 +125,16 @@ const columns = [
       <div className="flex justify-between items-center gap-4 mb-6">
         <div className="flex gap-4">
           <select className="px-4 py-2 pr-12 pl-4 rounded-3xl text-sm border border-gray-300 shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none">
-            <option value="">Status</option>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
+            <option value="">Select</option>
+            <option value="New" className="">New</option>
+              <option value="Selected" className="">Selected</option>
+              <option value="Rejected" className="">Rejected</option>
           </select>
-          <select className="px-4 py-2 rounded-md text-sm border border-gray-300 shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none">
-            <option value="">Select status</option>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
+          <select onChange={(e)=>handlefilter("status",e)}   className="px-4 py-2 rounded-md text-sm border border-gray-300 shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none">
+           <option value="">Postion</option>
+           <option value="New" className="">New</option>
+              <option value="Selected" className="">Selected</option>
+              <option value="Rejected" className="">Rejected</option>
           </select>
         </div>
 
@@ -102,7 +143,7 @@ const columns = [
             type="search"
             placeholder="Search"
             className="text-black p-2 px-4 border rounded-3xl border-[#ABABAB]"
-            onChange={handlesearch}
+            onChange={(e)=>handlefilter("searchKey",e)}
           />
           <button
             onClick={() => navigate("/add-product")}
