@@ -29,7 +29,7 @@ app.use(cors({
 
 
 // Connect to MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/mydb', {
+mongoose.connect('mongodb://127.0.0.1:27017/assignment', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
@@ -55,6 +55,10 @@ app.use('/', uploadRoutes);
 
 // Use product routes
 app.use('/', productRoutes);
+
+//for employee
+const employeeRoute = require('./Routes/EmployeeRoutes')
+app.use("/",employeeRoute)
 
 // Start server
 const PORT = 3000;

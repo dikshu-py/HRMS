@@ -6,10 +6,11 @@ const itemSchema = new mongoose.Schema({
     type : String,
     unique : true
   },
-  price: Number,
-  brand : String,
-  category : String,
-  detail: String,
+  email: String,
+  number : String,
+  position : String,
+  status : String,
+  experience: Number,
   image : String,
 });
 

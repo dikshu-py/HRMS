@@ -1,7 +1,8 @@
-const Item = require('../Models/Items');
+const Item = require('../Models/employee');
+
 
 // Add product
-exports.addProduct = async (req, res) => {
+exports.addEmployee = async (req, res) => {
   try {
     const item = await Item.create(req.body);
     res.status(201).json({
@@ -14,12 +15,11 @@ exports.addProduct = async (req, res) => {
     res.status(400).json({ success: false, message: "Failed to add item", error: err.message });
   }
 };
-
-// Get all products (with optional search by name)
-exports.getAllProducts = async (req, res) => {
+exports.getAllEmployees = async (req, res) => {
   try {
     const search = req.query.searchKey?.trim() || "";
     const status =  req.query.status?.trim() || "";
+    const position =  req.query.position?.trim() || "";
    
     var items;
     const query = {};
@@ -28,8 +28,8 @@ exports.getAllProducts = async (req, res) => {
       query.name = regex;
       
     } 
-    if (status) {
-      query.status = status; // exact match on status
+    if (position) {
+      query.position = position; // exact match on status
     }
     items = await Item.find(query);
 
@@ -44,8 +44,24 @@ exports.getAllProducts = async (req, res) => {
   }
 };
 
-// Get single product by ID
-exports.getProductById = async (req, res) => {
+// Delete product by ID
+exports.removeEmployee = async (req, res) => {
+  try {
+    console.log(req.params.id)
+    const item = await Item.findOneAndDelete({email : req.params.id});
+    if (!item) {
+        
+      return res.status(404).json({ success: false, message: "Item not found" });
+    }
+    res.status(200).json({ success: true, message: "Item deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Failed to delete item", error: err.message });
+  }
+};
+
+
+exports.getEmployeeByID = async (req, res) => {
   try {
     const item = await Item.findById(req.params.id);
     if (!item) {
@@ -58,9 +74,10 @@ exports.getProductById = async (req, res) => {
   }
 };
 
-// Update product by ID
-exports.updateProduct = async (req, res) => {
+exports.UpdateEmployeedata = async (req, res) => {
   try {
+    console.log(req.params.id)
+    console.log(req.body)
     const item = await Item.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -76,16 +93,3 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
-// Delete product by ID
-exports.deleteProduct = async (req, res) => {
-  try {
-    const item = await Item.findByIdAndDelete(req.params.id);
-    if (!item) {
-      return res.status(404).json({ success: false, message: "Item not found" });
-    }
-    res.status(200).json({ success: true, message: "Item deleted successfully" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: "Failed to delete item", error: err.message });
-  }
-};
