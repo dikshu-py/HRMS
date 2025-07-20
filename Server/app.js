@@ -28,30 +28,20 @@ const allowedOrigins = [
   'https://hrms-portal-aa2ldavyp-dikshu-pys-projects.vercel.app'
 ];
 
+
+
 app.use(cors({
   origin: function (origin, callback) {
-    console.log("🌐 Incoming Origin:", origin);
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      console.log("✅ Origin Allowed:", origin);
-      return callback(null, true);
-    }
-    console.log("❌ Origin Blocked:", origin);
+    if (!origin) return callback(null, true); // allow curl/postman
+    if (allowedOrigins.includes(origin)) return callback(null, true);
     return callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-app.use(function (req, res, next) {
-  if (allowedOrigins.includes(req.headers.origin)) {
-    res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
-    res.setHeader("Access-Control-Allow-Credentials", "true");
-  }
-  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  next();
-});
+
+app.options('*', cors()); // Preflight
 
 
 
