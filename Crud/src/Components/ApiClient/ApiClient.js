@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const url = import.meta.env.VITE_APP_BASE_URL
 const ApiClient = axios.create({
-  baseURL: url ||  'http://localhost:3000',
+  baseURL: 'https://hrms-two-murex.vercel.app'||    url ||  'http://localhost:3000',
   withCredentials: true
 });
 
