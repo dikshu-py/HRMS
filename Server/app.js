@@ -15,7 +15,14 @@ const LeaveRoutes = require('./Routes/LeavesRoutes');
 const app = express();
 app.use(express.json());
 
-const corsOptions = {
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://hrms-portal-aa2ldavyp-dikshu-pys-projects.vercel.app',
+  'https://hrms-portal-fawn.vercel.app/login'
+];
+
+app.use(cors({
   origin: function (origin, callback) {
     const allowedOrigins = [
       'http://localhost:5173',
