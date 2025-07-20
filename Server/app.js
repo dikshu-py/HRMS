@@ -23,21 +23,27 @@ app.use(express.json());
 const allowedOrigins = [
   'http://localhost:5173',
   'https://hrms-portal-fawn.vercel.app',
+ 
   'https://hrms-portal-aa2ldavyp-dikshu-pys-projects.vercel.app',
   'https://hrms-portal-aa2ldavyp-dikshu-pys-projects.vercel.app'
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin like mobile apps or curl requests
+    console.log("🌐 Incoming Origin:", origin);
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      console.log("✅ Origin Allowed:", origin);
+      return callback(null, true);
+    }
+    console.log("❌ Origin Blocked:", origin);
     return callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 
 // Connect to MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/assignment', {
