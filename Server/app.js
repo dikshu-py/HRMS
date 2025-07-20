@@ -60,6 +60,15 @@ app.use('/', productRoutes);
 const employeeRoute = require('./Routes/EmployeeRoutes')
 app.use("/",employeeRoute)
 
+
+//for employee
+const AttendenceRoutes = require('./Routes/AttendenceRoutes')
+app.use("/",AttendenceRoutes)
+
+//for employee
+const LeaveRoutes = require('./Routes/LeavesRoutes')
+app.use("/",LeaveRoutes)
+
 // Start server
 const PORT = 3000;
 app.listen(PORT, () => {

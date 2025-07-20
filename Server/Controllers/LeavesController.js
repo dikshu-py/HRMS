@@ -1,6 +1,7 @@
-// Add product
-const Item = require('../Models/attendence');
-exports.addAttendence = async (req, res) => {
+// Add New Leave
+const Item = require('../Models/Leaves');
+
+exports.addLeave = async (req, res) => {
   try {
     const item = await Item.create(req.body);
     res.status(201).json({
@@ -13,7 +14,7 @@ exports.addAttendence = async (req, res) => {
     res.status(400).json({ success: false, message: "Failed to add item", error: err.message });
   }
 };
-exports.getAllAttendence = async (req, res) => {
+exports.getAllLeaves = async (req, res) => {
   try {
     const search = req.query.searchKey?.trim() || "";
     const status =  req.query.status?.trim() || "";
@@ -29,9 +30,6 @@ exports.getAllAttendence = async (req, res) => {
     if (status) {
       query.status = status; // exact match on status
     }
-    if (position) {
-      query.position = position; // exact match on status
-    }
     items = await Item.find(query);
 
     res.status(200).json({
@@ -46,10 +44,10 @@ exports.getAllAttendence = async (req, res) => {
 };
 
 // Delete product by ID
-exports.removeAttendence = async (req, res) => {
+exports.removeLeaves = async (req, res) => {
   try {
     console.log(req.params.id)
-    const item = await Item.findOneAndDelete({email : req.params.id});
+    const item = await Item.findOneAndDelete({_id : req.params.id});
     if (!item) {
         
       return res.status(404).json({ success: false, message: "Item not found" });
@@ -62,7 +60,7 @@ exports.removeAttendence = async (req, res) => {
 };
 
 
-exports.getAttendencebyID = async (req, res) => {
+exports.getLeavebyID = async (req, res) => {
   try {
     const item = await Item.findById(req.params.id);
     if (!item) {
@@ -75,7 +73,7 @@ exports.getAttendencebyID = async (req, res) => {
   }
 };
 
-exports.updateAttendencedata = async (req, res) => {
+exports.updateLeavedata = async (req, res) => {
   try {
     console.log(req.params.id)
     console.log(req.body)

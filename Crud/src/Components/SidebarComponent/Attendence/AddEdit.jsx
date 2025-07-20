@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import ApiClient from '../../ApiClient/ApiClient';
+import shared from './shared';
 
 const AddEdit = ({ setIsopen, id ,getData }) => {
     const [formdata, setFormdata] = useState({
@@ -20,7 +21,7 @@ const AddEdit = ({ setIsopen, id ,getData }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await ApiClient.get(`/employee/${id}`);
+                const res = await ApiClient.get(`${shared.getAll}/${id}`);
                 if (res.data.success) {
                     const item = res.data.data
                     setFormdata({
@@ -46,7 +47,7 @@ const AddEdit = ({ setIsopen, id ,getData }) => {
 
     const handleSubmit =async (e) => {
         e.preventDefault();
-        await ApiClient.put(`/employee/${id}`,formdata).then((res)=>{
+        await ApiClient.put(`${shared.getAll}/${id}`,formdata).then((res)=>{
                 if(res.data.success){
                      setIsopen(false)
                 }

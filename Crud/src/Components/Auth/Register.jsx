@@ -13,7 +13,7 @@ const Register = () => {
            
             e.preventDefault(); // ✅ prevent page reload
             console.log(data)
-            const res = await ApiClient.post('http://localhost:3000/register', data).then(
+            const res = await ApiClient.post('/register', data).then(
                 (res)=>{
                     console.log(res)
                 }

@@ -22,7 +22,7 @@ const index = () => {
     const getData = async (filters = {}) => {
         try {
            const query = new URLSearchParams(filters).toString();
-           const res = await ApiCLient.get(`http://localhost:3000/products?${query}`);
+           const res = await ApiCLient.get(`/products?${query}`);
           setData(res.data.data);
         } catch (err) {
           console.log(err);
@@ -33,7 +33,7 @@ const index = () => {
 
     //to delete a Specific Item
     const deleteIetm = async (id) =>{
-        await ApiCLient.delete(`http://localhost:3000/delete/${id}`).then((res)=>console.log(res)).catch((err)=> console.log(err))
+        await ApiCLient.delete(`/delete/${id}`).then((res)=>console.log(res)).catch((err)=> console.log(err))
         getData();
     } 
 
@@ -55,15 +55,19 @@ const index = () => {
           position : "Intern",
           experience : row.experience || '',
           joining : new Date(),
+          task : 'Dashboard Home page Alignment',
           image : row.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7AO5QoFLh_DRpDwdWFDkhdMnvNI6xsw3dbw&s'
           }
-          await ApiCLient.post('http://localhost:3000/emplyee/add',payload).then((res)=>console.log(res)).catch((err)=> console.log(err))
+          await ApiCLient.post('/emplyee/add',payload).then((res)=>console.log(res)).catch((err)=> console.log(err))
+           await ApiCLient.post('/attendence/add',{...payload, status : "Present"}).then((res)=>console.log(res)).catch((err)=> console.log(err))
+
 
         }else{
-          await ApiClient.delete(`http://localhost:3000/employee/${row.email}`).then((res)=> alert("Removed From Employees")).catch((err)=>console.log(err))
+          await ApiClient.delete(`/employee/${row.email}`).then((res)=> alert("Removed From Employees")).catch((err)=>console.log(err))
+          await ApiClient.delete(`/attendence/${row.email}`).then((res)=> alert("Removed From Employees")).catch((err)=>console.log(err))
         }
         console.log(row)
-        await ApiClient.put(`http://localhost:3000/edit/${row._id}`,{status : value})
+        await ApiClient.put(`/edit/${row._id}`,{status : value})
         
         getData();
        
@@ -130,7 +134,7 @@ const columns = [
               <option value="Selected" className="">Selected</option>
               <option value="Rejected" className="">Rejected</option>
           </select>
-          <select onChange={(e)=>handlefilter("status",e)}   className="px-4 py-2 rounded-md text-sm border border-gray-300 shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none">
+          <select onChange={(e)=>handlefilter("status",e)}   className="px-4 py-2 pr-12 pl-4 rounded-3xl text-sm border border-gray-300 shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none">
            <option value="">Postion</option>
            <option value="New" className="">New</option>
               <option value="Selected" className="">Selected</option>

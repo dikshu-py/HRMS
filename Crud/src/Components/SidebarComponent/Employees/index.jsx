@@ -84,7 +84,7 @@ const index = () => {
   const getData = async (filters = {}) => {
     try {
       const query = new URLSearchParams(filters).toString();
-      const res = await ApiClient.get(`http://localhost:3000/emplyee?${query}`);
+      const res = await ApiClient.get(`/emplyee?${query}`);
       setData(res.data.data);
       setPosition("")
 
@@ -100,7 +100,7 @@ const index = () => {
   //to delete a Specific Item
   const deleteIetm = async (id) => {
     console.log(id)
-    await ApiClient.delete(`http://localhost:3000/employee/${id}`).then((res) => console.log(res)).catch((err) => console.log(err))
+    await ApiClient.delete(`/employee/${id}`).then((res) => console.log(res)).catch((err) => console.log(err))
     getData();
   }
 

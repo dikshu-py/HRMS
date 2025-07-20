@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+
+const url = import.meta.env.VITE_APP_BASE_URL
 const ApiClient = axios.create({
-  baseURL: 'http://localhost:3000/',
+  baseURL: url ||  'http://localhost:3000',
   withCredentials: true
 });
 

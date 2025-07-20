@@ -14,7 +14,7 @@ const View = () => {
 
   const getData = async () => {
     try {
-      const res = await ApiClient.get(`http://localhost:3000/detail/${id}`);
+      const res = await ApiClient.get(`/detail/${id}`);
       setData(res.data.data);
     } catch (err) {
       console.error(err);

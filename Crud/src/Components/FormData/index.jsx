@@ -30,7 +30,7 @@ const index = () => {
        
 
         if(id){
-            await ApiClient.put(`http://localhost:3000/edit/${id}`,formdata).then((res)=>{
+            await ApiClient.put(`/edit/${id}`,formdata).then((res)=>{
                 console.log(res)
                 navigate("/")
                 
@@ -38,7 +38,7 @@ const index = () => {
             }).catch((err)=> console.log(err))
 
         }else{
-            const res = await ApiClient.post("http://localhost:3000/add-products",formdata).then((res)=>{
+            const res = await ApiClient.post("/add-products",formdata).then((res)=>{
                 console.log(res)
                 navigate("/")
                 
@@ -58,7 +58,7 @@ const index = () => {
     },[id])
 
     const getdetails = async()=>{
-        const res = await ApiClient.get(`http://localhost:3000/detail/${id}`).then((res)=>{
+        const res = await ApiClient.get(`/detail/${id}`).then((res)=>{
             if(res.data.success){
                 console.log(res.data.data)
                 const item = res.data.data
@@ -86,7 +86,7 @@ const index = () => {
         formData.append('image', file);
     
         try {
-          const res = await ApiClient.post('http://localhost:3000/upload', formData, {
+          const res = await ApiClient.post('/upload', formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
             }

@@ -1,5 +1,5 @@
 const shared = {
-    getAll : "/emplyee",
+    getAll : "/attendence",
 
 }
 
