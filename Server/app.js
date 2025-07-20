@@ -1,93 +1,68 @@
-
 require('dotenv').config();
-
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
+
 const productRoutes = require('./Routes/productRoutes');
-// const Login = require('./models/login');  // keep if you use it
-const authMiddleware = require('./Middleware/auth');
-
-
-
-
-
-
+const authRoutes = require('./Routes/LoginRoutes');
+const uploadRoutes = require('./Routes/uploadRoutes');
+const employeeRoute = require('./Routes/EmployeeRoutes');
+const AttendenceRoutes = require('./Routes/AttendenceRoutes');
+const LeaveRoutes = require('./Routes/LeavesRoutes');
+// const authMiddleware = require('./Middleware/auth'); // Optional
 
 const app = express();
-
-// Middleware
 app.use(express.json());
 
-
+// ✅ Allowed origins list
 const allowedOrigins = [
   'http://localhost:5173',
   'https://hrms-portal-fawn.vercel.app',
-   'https://hrms-two-murex.vercel.app',
+  'https://hrms-two-murex.vercel.app',
   'https://hrms-portal-aa2ldavyp-dikshu-pys-projects.vercel.app',
-  'https://hrms-portal-aa2ldavyp-dikshu-pys-projects.vercel.app'
 ];
 
+// ✅ Dynamic CORS middleware
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  }
+  // Allow preflight
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
-
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true); // allow curl/postman
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    return callback(new Error('Not allowed by CORS'));
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
-
-app.options('*', cors()); // Preflight
-
-
-
-// Connect to MongoDB
+// ✅ MongoDB connection
 mongoose.connect('mongodb://127.0.0.1:27017/assignment', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log('✅ Connected to MongoDB'))
-.catch((err) => console.error('❌ MongoDB connection error:', err));
+  .then(() => console.log('✅ Connected to MongoDB'))
+  .catch((err) => console.error('❌ MongoDB connection error:', err));
 
-// Health check
+// ✅ Health check
 app.get('/', (req, res) => res.send('Hello from Node.js & MongoDB!'));
 
-const authRoutes = require('./Routes/LoginRoutes');
+// ✅ Static uploads
+app.use(express.static(path.join(__dirname, 'uploads')));
+
+// ✅ Routes
 app.use('/', authRoutes);
-
-
-
-//use for Login and Register
-
-
-// to Upload A Image
-const path = require('path');
-const uploadRoutes = require('./Routes/uploadRoutes');
-app.use(express.static(path.join(__dirname, 'uploads'))); // Serve static files
 app.use('/', uploadRoutes);
-
-// Use product routes
 app.use('/', productRoutes);
+app.use('/', employeeRoute);
+app.use('/', AttendenceRoutes);
+app.use('/', LeaveRoutes);
 
-//for employee
-const employeeRoute = require('./Routes/EmployeeRoutes')
-app.use("/",employeeRoute)
-
-
-//for employee
-const AttendenceRoutes = require('./Routes/AttendenceRoutes')
-app.use("/",AttendenceRoutes)
-
-//for employee
-const LeaveRoutes = require('./Routes/LeavesRoutes')
-app.use("/",LeaveRoutes)
-
-// Start server
-const PORT = 3000;
+// ✅ Start server
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
