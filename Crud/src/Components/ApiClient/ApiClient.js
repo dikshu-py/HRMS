@@ -4,7 +4,10 @@ import axios from 'axios';
 const url = import.meta.env.VITE_APP_BASE_URL
 const ApiClient = axios.create({
   baseURL: 'https://hrms-two-murex.vercel.app'||    url ||  'http://localhost:3000',
-  withCredentials: true
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 // Request interceptor to add token from localStorage
