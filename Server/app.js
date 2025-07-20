@@ -18,33 +18,19 @@ app.use(express.json());
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://hrms-portal-aa2ldavyp-dikshu-pys-projects.vercel.app',
-  'https://hrms-portal-fawn.vercel.app/login'
+  'https://hrms-portal-fawn.vercel.app'
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    const allowedOrigins = [
-      'http://localhost:5173',
-      'https://hrms-portal-fawn.vercel.app',
-      'https://hrms-two-murex.vercel.app',
-      'https://hrms-portal-aa2ldavyp-dikshu-pys-projects.vercel.app',
-    ];
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
+    if (!origin) return callback(null, true); // allow non-browser tools
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
-// ✅ USE THIS AS GLOBAL MIDDLEWARE
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // <-- handles OPTIONS preflight
-
 
 
 // ✅ MongoDB connection
