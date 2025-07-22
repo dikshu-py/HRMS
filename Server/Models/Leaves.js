@@ -7,7 +7,8 @@ const LeaveModel = new mongoose.Schema({
     image : String,
     name : String ,
     leavedate  : Date,
-    status : String
+    status : String,
+    document : String,
 })
 
 const Item  = mongoose.model('Leaves',LeaveModel)

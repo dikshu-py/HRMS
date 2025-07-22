@@ -19,7 +19,7 @@ exports.getAllLeaves = async (req, res) => {
     const search = req.query.searchKey?.trim() || "";
     const status =  req.query.status?.trim() || "";
     const position =  req.query.position?.trim() || "";
-    console.log("working Here ")
+    console.log("worki ")
     var items;
     const query = {};
     if (search) {

@@ -123,7 +123,12 @@ const index = () => {
   return (
 
     <div>
-      <Common columns={columns} data={data} getData={getData} handlefilter={handlefilter} deleteIetm={deleteIetm} position={position} />
+      <Common columns={columns} data={data} getData={getData} handlefilter={handlefilter} deleteIetm={deleteIetm} title={'Employee'}  position={position} command={'position'}  positionOptions={[{ label: "Position", value: "" },
+  { label: "Intern", value: "Intern" },
+  { label: "Full Time", value: "Fulltime" },
+  { label: "Junior", value: "Junior" },
+  { label: "Senior", value: "Senior" },
+  { label: "Team Lead", value: "TeamLead" }]}/>
       {
   isOpen && (
     <div

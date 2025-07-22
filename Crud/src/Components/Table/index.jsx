@@ -5,6 +5,10 @@ import ApiCLient from '../ApiClient/ApiClient'
 import Table from "../Global/Table"
 import { FiMoreVertical } from "react-icons/fi";
 import ApiClient from '../ApiClient/ApiClient'
+import StatusDropdown from '../Global/DropDown'
+import Popup from 'reactjs-popup';
+import Form from'../FormData/index';
+
 const index = () => {
     const [data,setData] = useState([])
     const navigate = useNavigate()
@@ -17,7 +21,7 @@ const index = () => {
   status: '',
   
 }); 
-
+    const [open,setOpen] = useState(false)
 
     const getData = async (filters = {}) => {
         try {
@@ -104,42 +108,163 @@ const columns = [
               <option value="Selected" className="">Selected</option>
               <option value="Rejected" className="">Rejected</option>
         </select>
+
+        
       );
     },
   },
   { header: "Experience", accessor: "experience", sort: false },
   {
-    header: "Action",
-    accessor: "action",
-    sort: false,
-    render: () => (
-      <button className="p-2 rounded hover:bg-gray-100">
-        <FiMoreVertical className="text-gray-600" />
-      </button>
-    ),
-  },
+        header: "Action",
+        accessor: "action",
+        sort: false,
+        render: (value, row) => (
+  
+          <Popup
+            trigger={
+              <button className="p-2 rounded hover:bg-gray-100">
+                <FiMoreVertical className="text-gray-600" />
+              </button>
+            }
+            position="left top"
+          >
+            {(close) => (
+              <div className='bg-white flex flex-col py-4 px-8 text-left space-y-5  shadow-md rounded'>
+                <button
+                onClick={() => window.open(row.image, "_blank")}
+                  // onClick={() => {
+                  //   setIsopen(true);
+                    
+                  //   setId(row._id);
+                  //   close(); // <-- close popup
+                  // }}
+                  className='text-left'
+                >
+                  Download Resume
+                </button>
+                <button
+                  className='text-left'
+                  onClick={() => {
+                    deleteIetm(row._id);
+                    close(); // <-- close popup
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            )}
+          </Popup>
+  
+        ),
+      },
 ];
 
   return (
   <div className="h-full flex flex-col bg-gray-50">
+
+    <div className="w-full flex justify-between bg-white px-4 pt-8">
+              <h2 className='text-[20px] '>Candidates</h2>
+              <div className="flex items-center gap-2">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 8L10.8906 13.2604C11.5624 13.7083 12.4376 13.7083 13.1094 13.2604L21 8M5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19Z" stroke="#121212" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <circle cx="19" cy="10" r="4" fill="#B70000" />
+                </svg>
+    
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 5.5C14.7614 5.5 17 7.73858 17 10.5V12.7396C17 13.2294 17.1798 13.7022 17.5052 14.0683L18.7808 15.5035C19.6407 16.4708 18.954 18 17.6597 18H6.34025C5.04598 18 4.35927 16.4708 5.21913 15.5035L6.4948 14.0683C6.82022 13.7022 6.99998 13.2294 6.99998 12.7396L7 10.5C7 7.73858 9.23858 5.5 12 5.5ZM12 5.5V3M10.9999 21H12.9999" stroke="#121212" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+    
+    
+                <img className='rounded-full w-6 h-6' src= 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7AO5QoFLh_DRpDwdWFDkhdMnvNI6xsw3dbw&s' />
+                    <Popup
+          trigger={
+            <svg
+              width="12"
+              height="7"
+              viewBox="0 0 12 7"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="cursor-pointer"
+            >
+              <path
+                d="M1 1.5L5.29289 5.79289C5.68342 6.18342 6.31658 6.18342 6.70711 5.79289L11 1.5"
+                stroke="#4D007D"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          }
+          position="left top"
+          arrow={false}
+          closeOnDocumentClick
+          on={["click", "hover"]}
+          className="z-50"
+        >
+          {(close) => (
+            <div className="bg-white flex flex-col py-4 px-6 text-left space-y-3 shadow-md rounded-md w-48">
+              <button
+                onClick={() => {
+                  setIsopen(true);
+                  setId && setId("userId"); // pass the actual user id
+                  close();
+                }}
+                className="text-sm text-left hover:text-purple-700 focus:outline-none"
+              >
+                Edit Profile
+              </button>
+              <button
+                onClick={() => {
+                  deleteItem && deleteItem("user@example.com"); // replace with actual
+                  close();
+                }}
+                className="text-sm text-left hover:text-purple-700"
+              >
+                Change Password
+              </button>
+              <button
+                onClick={() => {
+                  // Add handler here
+                  close();
+                }}
+                className="text-sm text-left hover:text-purple-700"
+              >
+                Manage Notification
+              </button>
+            </div>
+          )}
+        </Popup>
+    
+              </div>
+            </div>
+
     {/* Main Content Wrapper */}
     <div className="flex-1 bg-white px-5 py-8 overflow-auto">
       
       {/* Top Filters/Search */}
       <div className="flex justify-between items-center gap-4 mb-6">
         <div className="flex gap-4">
-          <select className="px-4 py-2 pr-12 pl-4 rounded-3xl text-sm border border-gray-300 shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none">
-            <option value="">Select</option>
-            <option value="New" className="">New</option>
-              <option value="Selected" className="">Selected</option>
-              <option value="Rejected" className="">Rejected</option>
-          </select>
-          <select onChange={(e)=>handlefilter("status",e)}   className="px-4 py-2 pr-12 pl-4 rounded-3xl text-sm border border-gray-300 shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none">
-           <option value="">Postion</option>
-           <option value="New" className="">New</option>
-              <option value="Selected" className="">Selected</option>
-              <option value="Rejected" className="">Rejected</option>
-          </select>
+       <StatusDropdown
+  option={[
+  { label: "Select", value: "" },
+  { label: "New", value: "New" },
+  { label: "Selected", value: "Selected" },
+  { label: "Rejected", value: "Rejected" }
+]}
+  handlefilter={handlefilter}
+  command="status"
+/>
+
+<StatusDropdown
+  option={[
+  { label: "Position", value: "" },
+  { label: "New", value: "New" },
+  { label: "Selected", value: "Selected" },
+  { label: "Rejected", value: "Rejected" }
+]}
+  handlefilter={handlefilter}
+  command="position"
+/>
         </div>
 
         <div className="flex gap-4">
@@ -150,7 +275,7 @@ const columns = [
             onChange={(e)=>handlefilter("searchKey",e)}
           />
           <button
-            onClick={() => navigate("/add-product")}
+            onClick={() => setOpen(true)}
             className="bg-custom-purple text-white px-10 h-[39px] rounded-3xl hover:border-black"
           >
             Add Candidate
@@ -163,6 +288,11 @@ const columns = [
         <Table columns={columns} data={data} />
       </div>
     </div>
+    {open && (
+  <div className="fixed inset-0 z-50 bg-black/50 bg-opacity-10 flex items-center justify-center animate-fade">
+    <Form setOpen={setOpen} />
+  </div>
+)}
   </div>
 );
 

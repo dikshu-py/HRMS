@@ -19,7 +19,7 @@ const PrivateRoutes = () => {
   // Authenticated: render layout + child routes
   return (
     <div className="flex flex-col min-h-screen w-screen">
-  <Header />
+  {/* <Header /> */}
 
   <div className="flex flex-1 overflow-hidden  ">
     <Sidebar />

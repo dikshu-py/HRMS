@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 
-const Table = ({ columns, data }) => {
+const Table = ({ columns, data,namplate }) => {
     console.log(data)
   const [sortConfig, setSortConfig] = useState(null);
 
@@ -34,7 +34,7 @@ const Table = ({ columns, data }) => {
   };
 
   return (
-    <div className="rounded-3xl shadow-xl overflow-x-auto mt-[16px] h-full   border  sm:min-h-[74vh]">
+    <div className="rounded-3xl shadow-xl overflow-x-auto mt-[16px] h-full   border  sm:min-h-[72vh]">
       <table className="min-w-full text-[16px] font-[400] text-left ">
         <thead>
           <tr className="bg-purple-800 text-white text-xs uppercase">

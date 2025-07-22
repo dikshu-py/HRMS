@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import ApiClient from '../ApiClient/ApiClient';
-const index = () => {
+const index = ({setOpen}) => {
     //form to save data 
     const [formdata,setFormdata] = useState({
         name : "",
@@ -46,6 +46,7 @@ const index = () => {
             }).catch((err)=> console.log(err))
 
         }
+        setOpen(false)
     }
     
     // to get the details if id is present
@@ -146,19 +147,26 @@ const index = () => {
                     <textarea value={formdata.detail} id="product-details" onChange={(e)=> setFormdata({...formdata, detail:e.target.value})   }      rows="6" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4" placeholder="Details"></textarea>
                 </div> */}
                 
-                <div className='text-black'>
+                <div class="col-span-6 sm:col-span-3 shadow-sm bg-gray-50 border border-custom-purple text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
                     {
-                        !formdata.image && 
-                        <div>
+                                        !formdata.image &&
+                                        <div className='flex w-full justify-between'>
 
-                        <input type="file" onChange={handleChange} accept="image/*" />
-                        <button type='button' onClick={handleUpload}>Upload</button></div>
-                    }
+                                            <input type="file" onChange={handleChange} accept="image/*" />
+                                            <button type='button' onClick={handleUpload}>
+
+                                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.3335 14.1666V15.8333C3.3335 16.2753 3.50909 16.6992 3.82165 17.0118C4.13421 17.3243 4.55814 17.4999 5.00016 17.4999H15.0002C15.4422 17.4999 15.8661 17.3243 16.1787 17.0118C16.4912 16.6992 16.6668 16.2753 16.6668 15.8333V14.1666M5.8335 7.49992L10.0002 3.33325M10.0002 3.33325L14.1668 7.49992M10.0002 3.33325V13.3333" stroke="#4D007D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+                                                </button></div>
+                                    }
                    
                     {formdata.image && (
-                        <div>
-                        <p>Uploaded Image:</p>
-                        <img src={formdata.image} alt="Uploaded" width="200" />
+                        <div className=''>
+                        {/* <p>Uploaded Image:</p> */}
+                        {/* <img src={formdata.image} alt="Uploaded" width="200" /> */}
+                        <p>{formdata.image}</p>
                         </div>
                     )}
                     </div>

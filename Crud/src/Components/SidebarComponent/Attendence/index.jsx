@@ -151,7 +151,14 @@ const index = () => {
   return (
     
     <div>
-      <Common columns={columns} data={data} getData={getData} handlefilter={handlefilter} deleteIetm={deleteIetm} />
+      <Common columns={columns} data={data} getData={getData} title={'Attendence'} handlefilter={handlefilter} deleteIetm={deleteIetm} positionOptions={
+        [
+  // {label: "Status", value: "", className: "text-green-700" },
+  { label: "Present", value: "Present", className: "text-green-700" },
+  { label: "Absent", value: "Absent", className: "text-red-700" }
+]
+
+      } command={'status'}/>
       {
   isOpen && (
     <div
