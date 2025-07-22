@@ -7,6 +7,7 @@ const loginSchema = new mongoose.Schema({
     unique : true
   },
   password : String,
+  name:String,
 
 });
 

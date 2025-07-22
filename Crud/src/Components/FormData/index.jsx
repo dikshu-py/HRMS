@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import ApiClient from '../ApiClient/ApiClient';
-const index = ({setOpen}) => {
+const index = ({setOpen,getData}) => {
     //form to save data 
     const [formdata,setFormdata] = useState({
         name : "",
@@ -32,7 +32,7 @@ const index = ({setOpen}) => {
         if(id){
             await ApiClient.put(`/edit/${id}`,formdata).then((res)=>{
                 console.log(res)
-                navigate("/")
+                getData()
                 
     
             }).catch((err)=> console.log(err))
@@ -40,13 +40,14 @@ const index = ({setOpen}) => {
         }else{
             const res = await ApiClient.post("/add-products",formdata).then((res)=>{
                 console.log(res)
-                navigate("/")
+                getData()
                 
     
             }).catch((err)=> console.log(err))
 
         }
         setOpen(false)
+        
     }
     
     // to get the details if id is present

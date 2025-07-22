@@ -290,7 +290,7 @@ const columns = [
     </div>
     {open && (
   <div className="fixed inset-0 z-50 bg-black/50 bg-opacity-10 flex items-center justify-center animate-fade">
-    <Form setOpen={setOpen} />
+    <Form setOpen={setOpen} getData={getData}/>
   </div>
 )}
   </div>
