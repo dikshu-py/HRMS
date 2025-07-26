@@ -16,10 +16,10 @@ const Register = () => {
         const handlesubmit = async (e) =>{
            
             e.preventDefault(); // ✅ prevent page reload
-            console.log(data)
+           
             const res = await ApiClient.post('/register', data).then(
                 (res)=>{
-                    console.log(res)
+                   
                     navigate("/login")
                 }
             ).catch((err)=>console.log(err))

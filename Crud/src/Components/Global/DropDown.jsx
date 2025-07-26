@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const StatusDropdown = ({ option, handlefilter ,command}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState(option[0]?.label || "Status");
-console.log(option,command)
+
   const handleSelect = (status) => {
     setSelectedStatus(status.label);
     setIsOpen(false);

@@ -43,7 +43,7 @@ const index = () => {
   const handleStatusChange = async (row, newStatus) => {
   try {
     // Update status in backend
-    console.log(row)
+   
     await ApiClient.put(`/${shared.path}/${row._id}`, {
       status: newStatus
     });
@@ -164,7 +164,7 @@ const index = () => {
   ];
   const getData = async (filter =filters ) => {
     try {
-      console.log(filter)
+      
       const query = new URLSearchParams(filter).toString();
       const res = await ApiClient.get(`/${shared.path}?${query}`);
       setData(res.data.data);
@@ -196,11 +196,11 @@ const index = () => {
   },[data])
   const getNameList = async (filter =filters ) => {
     try {
-      console.log(filter)
+     
       const payload = {...filters, status : "Present"}
       const query = new URLSearchParams(payload).toString();
       const res = await ApiClient.get(`${shared.namelist}?${query}`);
-      console.log(res.data,"kakkasd")
+      
       setNamelist(res.data.data);
       setPosition("")
 
@@ -215,7 +215,7 @@ const index = () => {
   const [isOpen, setIsopen] = useState(false)
   //to delete a Specific Item
   const deleteIetm = async (idx) => {
-    console.log(idx)
+ 
     await ApiClient.delete(`/${shared.path}/${idx}`).then((res) => console.log(res)).catch((err) => console.log(err))
     getData();
   }

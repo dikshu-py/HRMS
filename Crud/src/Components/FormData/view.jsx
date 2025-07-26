@@ -24,7 +24,7 @@ const View = () => {
   return (
     <div className="min-w-screen mt-12 p-4">
       {/* Back button at left */}
-      {console.log(data)}
+      
       <div className="mb-4 mt-2">
         <button
           onClick={() => navigate(-1)}
@@ -67,7 +67,7 @@ const View = () => {
           <span className="font-medium">Detail:</span>
           <span>{data.detail}</span>
         </div>
-        {console.log(data.image)}
+      
         {data.image && (
                         <div>
                         <p> Image:</p>

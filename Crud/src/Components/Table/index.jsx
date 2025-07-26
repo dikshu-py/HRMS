@@ -50,7 +50,7 @@ const Index = () => {
       const payload = {...filters,searchKey:seachitem}
       setFilters(payload)
       getData(payload)
-    },500)
+    },200)
      return () => clearTimeout(delaydebounce);
   },[seachitem])
 

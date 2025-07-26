@@ -113,7 +113,7 @@ const index = () => {
     try {
       const query = new URLSearchParams(filters).toString();
       const res = await ApiClient.get(`${shared.getAll}?${query}`);
-      console.log(res.data.data,"ress")
+      
       setData(res.data.data);
 
     } catch (err) {
@@ -127,7 +127,7 @@ const index = () => {
 
   //to delete a Specific Item
   const deleteIetm = async (id) => {
-    console.log(id)
+    
     await ApiClient.delete(`${shared.getAll}/${id}`).then((res) => console.log(res)).catch((err) => console.log(err))
      await ApiClient.delete(`/attendence/${id}`).then((res)=> alert("Removed From Employees")).catch((err)=>console.log(err))
     getData();

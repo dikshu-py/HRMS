@@ -86,7 +86,7 @@ const index = () => {
       const query = new URLSearchParams(filters).toString();
       const res = await ApiClient.get(`/emplyee?${query}`);
       setData(res.data.data);
-      console.log(res.data.data,"re")
+      
       setPosition("")
 
     } catch (err) {
@@ -100,7 +100,7 @@ const index = () => {
   const [isOpen, setIsopen] = useState(false)
   //to delete a Specific Item
   const deleteIetm = async (id) => {
-    console.log(id)
+   
     await ApiClient.delete(`/employee/${id}`).then((res) => console.log(res)).catch((err) => console.log(err))
     getData();
   }

@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 
 const Table = React.memo(({ columns, data, namplate }) => {
-  console.log("Rendering Table...");
+ 
 
   const [sortConfig, setSortConfig] = useState(null);
 

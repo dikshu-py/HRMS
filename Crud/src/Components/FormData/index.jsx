@@ -18,7 +18,7 @@ const index = ({setOpen,getData}) => {
     const [checkbox,setCheckbox] = useState(false)
 
      const { id } = useParams();
-     console.log(id)
+ 
     const navigate = useNavigate()
     useEffect(()=>{
         setCheckbox(false)
@@ -31,7 +31,7 @@ const index = ({setOpen,getData}) => {
 
         if(id){
             await ApiClient.put(`/edit/${id}`,formdata).then((res)=>{
-                console.log(res)
+         
                 getData()
                 
     
@@ -39,7 +39,7 @@ const index = ({setOpen,getData}) => {
 
         }else{
             const res = await ApiClient.post("/add-products",formdata).then((res)=>{
-                console.log(res)
+                
                 
                 getData()
                 
@@ -63,7 +63,7 @@ const index = ({setOpen,getData}) => {
     const getdetails = async()=>{
         const res = await ApiClient.get(`/detail/${id}`).then((res)=>{
             if(res.data.success){
-                console.log(res.data.data)
+                
                 const item = res.data.data
                 setFormdata({
                     name : item.name,

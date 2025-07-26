@@ -84,7 +84,7 @@ const AddLeave = ({ setIsopen, id, getData, data, namelist, setId }) => {
         if (id) {
 
             await ApiClient.put(`/${shared.path}/${id}`, formdata).then((res) => {
-                console.log("a")
+             
                 if (res.data.success) {
                     setIsopen(false)
                 }
@@ -94,7 +94,7 @@ const AddLeave = ({ setIsopen, id, getData, data, namelist, setId }) => {
             }).catch((err) => console.log(err))
         } else {
             await ApiClient.post(`/${shared.path}/add`, formdata).then((res) => {
-                console.log("a")
+             
                 if (res.data.success) {
                     setIsopen(false)
                 }
@@ -110,7 +110,7 @@ const AddLeave = ({ setIsopen, id, getData, data, namelist, setId }) => {
 
     }
 
-    console.log(namelist)
+    
     return (
         <div className='fixed  inset-0  bg-black/50 z-50 flex items-center justify-centers h-full'>
             <div class="bg-white w-[1080px] h-[397px]  rounded-xl  shadow relative  text-left  mx-auto my-auto">
