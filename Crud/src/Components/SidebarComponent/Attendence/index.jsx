@@ -113,6 +113,7 @@ const index = () => {
     try {
       const query = new URLSearchParams(filters).toString();
       const res = await ApiClient.get(`${shared.getAll}?${query}`);
+      console.log(res.data.data,"ress")
       setData(res.data.data);
 
     } catch (err) {

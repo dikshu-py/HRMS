@@ -1,9 +1,11 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ApiClient from '../ApiClient/ApiClient';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const token = localStorage.getItem('token')
+    
     const [data,setData] = useState({
         email : "",
         password : ""
@@ -11,6 +13,16 @@ const Login = () => {
      const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate()
+
+    // if token is present move it to lgoin Page
+    // useEffect(()=>{
+    //   alert(token)
+    //   if(token){
+    //     navigate("/")
+    //   }
+    // },[token])
+
+
     const handlesubmit = async (e) =>{
         e.preventDefault(); // ✅ prevent page reload
         console.log(data)

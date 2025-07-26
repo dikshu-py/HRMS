@@ -7,7 +7,12 @@ function authMiddleware(req, res, next) {
   if (!token) return res.status(401).json({ error: "Unauthorized" });
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET,function(err, decoded){
+      if(err){
+        console.log(err)
+        localStorage.removeItem('token')
+      }
+    });
     req.user = decoded;
     next();
   } catch {

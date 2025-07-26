@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
-
+const compression = require('compression')
 const productRoutes = require('./Routes/productRoutes');
 const authRoutes = require('./Routes/LoginRoutes');
 const uploadRoutes = require('./Routes/uploadRoutes');
@@ -14,11 +14,15 @@ const LeaveRoutes = require('./Routes/LeavesRoutes');
 
 const app = express();
 app.use(express.json());
+app.use(compression());
+app.use(express.static('dist'));
+
 
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://hrms-portal-fawn.vercel.app'
+  'https://hrms-portal-fawn.vercel.app',
+  'http://172.20.10.2:63776'
 ];
 
 app.use(cors({

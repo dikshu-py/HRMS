@@ -197,7 +197,8 @@ const index = () => {
   const getNameList = async (filter =filters ) => {
     try {
       console.log(filter)
-      const query = new URLSearchParams(filters).toString();
+      const payload = {...filters, status : "Present"}
+      const query = new URLSearchParams(payload).toString();
       const res = await ApiClient.get(`${shared.namelist}?${query}`);
       console.log(res.data,"kakkasd")
       setNamelist(res.data.data);

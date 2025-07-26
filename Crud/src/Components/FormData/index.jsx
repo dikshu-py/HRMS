@@ -40,6 +40,7 @@ const index = ({setOpen,getData}) => {
         }else{
             const res = await ApiClient.post("/add-products",formdata).then((res)=>{
                 console.log(res)
+                
                 getData()
                 
     
@@ -203,4 +204,4 @@ const index = ({setOpen,getData}) => {
   )
 }
 
-export default index
+export default React.memo(index)

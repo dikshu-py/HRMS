@@ -86,6 +86,7 @@ const index = () => {
       const query = new URLSearchParams(filters).toString();
       const res = await ApiClient.get(`/emplyee?${query}`);
       setData(res.data.data);
+      console.log(res.data.data,"re")
       setPosition("")
 
     } catch (err) {
