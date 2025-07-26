@@ -38,7 +38,7 @@ app.use(cors({
 
 
 // ✅ MongoDB connection
-mongoose.connect('mongodb://127.0.0.1:27017/assignment', {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

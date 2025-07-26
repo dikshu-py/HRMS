@@ -125,8 +125,8 @@ const Index = () => {
         >
           {(close) => (
             <div className='bg-white flex flex-col py-4 px-8 text-left space-y-5 shadow-md rounded'>
-              <button onClick={() => window.open(row.image, "_blank")}>Download Resume</button>
-              <button onClick={() => { deleteItem(row._id); close(); }}>Delete</button>
+              <button  className='text-left'  onClick={() => window.open(row.image, "_blank")}>Download Resume</button>
+              <button  className='text-left' onClick={() => { deleteItem(row._id); close(); }}>Delete</button>
             </div>
           )}
         </Popup>
