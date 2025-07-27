@@ -54,7 +54,9 @@ const common = ({ columns, data, getData, handlefilter, deleteIetm, position, ad
             </svg>
 
 
-            <div className="h-4 w-4 border profile rounded-full"></div>
+           <div className="flex items-center gap-2">
+          <img className='rounded-full w-6 h-6' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7AO5QoFLh_DRpDwdWFDkhdMnvNI6xsw3dbw&s' />
+        </div>
                 <Popup
       trigger={
         <svg
