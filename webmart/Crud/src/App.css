@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+#root {
+ 
+  /* min-width: 1280px; */
+  margin: 0 0;
+  padding: 0;
+  box-sizing: border-box;
+ 
+}
+
